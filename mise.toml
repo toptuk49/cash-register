@@ -1,0 +1,30 @@
+[tools]
+dotnet = "8.0.401"
+
+[tasks.run]
+description = "Run application"
+run = "dotnet run --project src/CashRegister.Presentation"
+
+[tasks.watch-run]
+description = "Run application with hot reload"
+run = "dotnet watch --project src/CashRegister.Presentation run"
+
+[tasks.build]
+description = "Build all projects"
+run = "dotnet build src"
+
+[tasks.format]
+description = "Format all files"
+run = "dotnet format"
+
+[tasks.test]
+description = "Run all tests"
+run = "dotnet test tests"
+
+[tasks.init]
+description = "Create .sln and a console application"
+run = [
+  "dotnet new sln -n CashRegister",
+  "dotnet new console -n CashRegister.Presentation -o src/CashRegister.Presentation",
+  "dotnet sln CashRegister.sln add src/CashRegister.Presentation/CashRegister.Presentation.csproj",
+]
