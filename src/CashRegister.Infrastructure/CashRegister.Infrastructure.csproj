@@ -5,5 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CashRegister.Application\CashRegister.Application.csproj" />
+  </ItemGroup>
 
 </Project>
