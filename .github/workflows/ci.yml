@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install mise
+        run: |
+          curl https://mise.run | sh
+          export PATH="$HOME/.mise/bin:$PATH"
+          mise --version
+
+      - name: Build all projects
+        run: mise build
+
+      - name: Run tests
+        run: mise test
+
+      - name: Format code
+        run: mise format
+
+      - name: Run application (optional)
+        if: github.event_name == 'workflow_dispatch'
+        run: mise run
