@@ -7,7 +7,7 @@ public class FakeBarcodeScannerService : IBarcodeScannerService
 {
   public string Scan()
   {
-    Console.Write("Enter barcode: ");
+    Console.Write("Введите идентификатор штрих-кода: ");
     return Console.ReadLine() ?? string.Empty;
   }
 }

@@ -8,9 +8,9 @@ public class Receipt
 
   public void Print()
   {
-    Console.WriteLine($"\nReceipt #{Id}");
+    Console.WriteLine($"\nЧЕК #{Id}");
     foreach (var p in Products)
       Console.WriteLine($"{p.Name} - {p.Price:C}");
-    Console.WriteLine($"TOTAL: {Total:C}\n");
+    Console.WriteLine($"СУММА: {Total:C}\n");
   }
 }
