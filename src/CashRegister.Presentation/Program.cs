@@ -1,21 +1,39 @@
-﻿using CashRegister.Presentation.Models;
+﻿using CashRegister.Application.Services;
+using CashRegister.Domain.Interfaces;
+using CashRegister.Infrastructure.Persistence;
+using CashRegister.Infrastructure.Services;
 using CashRegister.Presentation.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-Console.WriteLine("=== Модуль кассы ===");
-Console.Write("Войти как (кассир/администратор): ");
+var serviceProvider = new ServiceCollection()
+  // Domain / Infrastructure
+  .AddSingleton<IProductRepository, InMemoryProductRepository>()
+  .AddSingleton<IReceiptRepository, InMemoryReceiptRepository>()
+  .AddSingleton<IUserRepository, InMemoryUserRepository>()
+  .AddSingleton<IBarcodeScannerService, FakeBarcodeScannerService>()
+  .AddSingleton<IAuthenticationService, SimpleAuthenticationService>()
+  .AddSingleton<IReportService, FakeReportService>()
+  .AddSingleton<IExportService, FakeExportService>()
+  // Presentation
+  .AddSingleton<CashierService>()
+  .AddSingleton<AdminService>()
+  .BuildServiceProvider();
+
+Console.WriteLine("=== CashRegister System ===");
+Console.Write("Login as (cashier/admin): ");
 var role = Console.ReadLine()?.Trim().ToLower();
 
-if (role == "кассир")
+if (role == "cashier")
 {
-  var cashier = new CashierService();
+  var cashier = serviceProvider.GetRequiredService<CashierService>();
   cashier.Run();
 }
-else if (role == "администратор")
+else if (role == "admin")
 {
-  var admin = new AdminService();
+  var admin = serviceProvider.GetRequiredService<AdminService>();
   admin.Run();
 }
 else
 {
-  Console.WriteLine("Неизвестная роль. Выход из программы...");
+  Console.WriteLine("Unknown role. Exiting...");
 }

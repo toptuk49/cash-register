@@ -1,49 +1,58 @@
-using CashRegister.Presentation.Models;
+using CashRegister.Application.Services;
+using CashRegister.Domain.Entities;
+using CashRegister.Domain.Interfaces;
 
 namespace CashRegister.Presentation.Services;
 
 public class CashierService
 {
-  private readonly List<Product> _catalog = new()
+  private readonly IProductRepository _productRepo;
+  private readonly IReceiptRepository _receiptRepo;
+  private readonly IBarcodeScannerService _scanner;
+
+  public CashierService(
+    IProductRepository productRepo,
+    IReceiptRepository receiptRepo,
+    IBarcodeScannerService scanner
+  )
   {
-    new("111", "Молоко", 1.20m),
-    new("222", "Хлеб", 0.80m),
-    new("333", "Кофе", 4.50m),
-  };
+    _productRepo = productRepo;
+    _receiptRepo = receiptRepo;
+    _scanner = scanner;
+  }
 
   public void Run()
   {
-    Console.WriteLine("Авторизован как кассир.");
+    Console.WriteLine("Logged in as cashier.");
     var receipt = new Receipt();
 
     while (true)
     {
-      Console.Write(
-        "Сканировать штрих-код (название продукта) (или 'оплата' / 'возврат' / 'выход'): "
-      );
-      var input = Console.ReadLine();
+      Console.Write("Scan barcode (or 'pay' / 'return' / 'exit'): ");
+      var input = _scanner.Scan();
 
-      if (input == "выход")
+      if (input == "exit")
         break;
-      if (input == "оплата")
+      if (input == "pay")
       {
         receipt.Print();
-        receipt = new Receipt();
+        _receiptRepo.Add(receipt);
+        receipt = new Receipt(); // new sale
         continue;
       }
-      if (input == "возврат")
+      if (input == "return")
       {
-        Console.WriteLine("Оформляем возврат...");
+        Console.WriteLine("Processing return... (stub)");
         continue;
       }
 
-      var product = _catalog.FirstOrDefault(p => p.Barcode == input);
-      if (product is null)
-        Console.WriteLine("Продукт не найден.");
+      var product = _productRepo.GetByBarcode(input);
+      if (product == null)
+        Console.WriteLine("Product not found.");
       else
       {
-        receipt.Products.Add(product);
-        Console.WriteLine($"Добавлен продукт {product.Name} - {product.Price:C}");
+        receipt.AddProduct(product);
+        Console.WriteLine($"Added {product.Name} - {product.Price:C}");
       }
     }
   }

@@ -1,32 +1,70 @@
+using CashRegister.Application.Services;
+using CashRegister.Domain.Entities;
+using CashRegister.Domain.Interfaces;
+
 namespace CashRegister.Presentation.Services;
 
 public class AdminService
 {
+  private readonly IProductRepository _productRepo;
+  private readonly IReceiptRepository _receiptRepo;
+  private readonly IReportService _reportService;
+  private readonly IExportService _exportService;
+  private readonly IBarcodeScannerService _scanner;
+
+  public AdminService(
+    IProductRepository productRepo,
+    IReceiptRepository receiptRepo,
+    IReportService reportService,
+    IExportService exportService,
+    IBarcodeScannerService scanner
+  )
+  {
+    _productRepo = productRepo;
+    _receiptRepo = receiptRepo;
+    _reportService = reportService;
+    _exportService = exportService;
+    _scanner = scanner;
+  }
+
   public void Run()
   {
-    Console.WriteLine("Авторизован, как администратор.");
-    Console.WriteLine("Доступные действия: сканировать, отчет, экспортировать, выход");
+    Console.WriteLine("Logged in as admin.");
 
     while (true)
     {
-      Console.Write("Введите действие: ");
-      var cmd = Console.ReadLine();
+      Console.Write("Command (scan/report/export/exit): ");
+      var cmd = Console.ReadLine()?.Trim().ToLower();
 
       switch (cmd)
       {
-        case "сканировать":
-          Console.WriteLine("Сканируем продукт...");
+        case "scan":
+          Console.Write("Scan barcode: ");
+          var barcode = _scanner.Scan();
+          var product = _productRepo.GetByBarcode(barcode);
+          Console.WriteLine(
+            product != null
+              ? $"Found product: {product.Name} - {product.Price:C}"
+              : "Product not found."
+          );
           break;
-        case "отчет":
-          Console.WriteLine("Формируем отчет...");
+
+        case "report":
+          var report = _reportService.GenerateSalesReport(_receiptRepo.GetAll());
+          Console.WriteLine("=== Sales Report ===");
+          Console.WriteLine(report);
           break;
-        case "экспортировать":
-          Console.WriteLine("Экспортируем данные в учетную систему...");
+
+        case "export":
+          _exportService.ExportReceipts(_receiptRepo.GetAll());
+          Console.WriteLine("Export completed.");
           break;
-        case "выход":
+
+        case "exit":
           return;
+
         default:
-          Console.WriteLine("Неизвестное действие.");
+          Console.WriteLine("Unknown command.");
           break;
       }
     }

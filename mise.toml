@@ -11,7 +11,7 @@ run = "dotnet watch --project src/CashRegister.Presentation run"
 
 [tasks.build]
 description = "Build all projects"
-run = "dotnet build src"
+run = "dotnet build CashRegister.sln"
 
 [tasks.format]
 description = "Format all files"
