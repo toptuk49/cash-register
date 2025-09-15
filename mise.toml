@@ -15,11 +15,11 @@ run = "dotnet build CashRegister.sln"
 
 [tasks.format]
 description = "Format all files"
-run = "dotnet format"
+run = "dotnet format CashRegister.sln"
 
 [tasks.test]
 description = "Run all tests"
-run = "dotnet test tests"
+run = "dotnet test CashRegister.sln"
 
 [tasks.init]
 description = "Create .sln and a console application"
