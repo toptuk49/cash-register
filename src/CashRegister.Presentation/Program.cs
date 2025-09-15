@@ -12,28 +12,26 @@ var serviceProvider = new ServiceCollection()
   .AddSingleton<IUserRepository, InMemoryUserRepository>()
   .AddSingleton<IBarcodeScannerService, FakeBarcodeScannerService>()
   .AddSingleton<IAuthenticationService, SimpleAuthenticationService>()
-  .AddSingleton<IReportService, FakeReportService>()
-  .AddSingleton<IExportService, FakeExportService>()
   // Presentation
   .AddSingleton<CashierService>()
   .AddSingleton<AdminService>()
   .BuildServiceProvider();
 
-Console.WriteLine("=== CashRegister System ===");
-Console.Write("Login as (cashier/admin): ");
+Console.WriteLine("=== Модуль кассы ===");
+Console.Write("Авторизоваться как (кассир/администратор): ");
 var role = Console.ReadLine()?.Trim().ToLower();
 
-if (role == "cashier")
+if (role == "кассир")
 {
   var cashier = serviceProvider.GetRequiredService<CashierService>();
   cashier.Run();
 }
-else if (role == "admin")
+else if (role == "администратор")
 {
   var admin = serviceProvider.GetRequiredService<AdminService>();
   admin.Run();
 }
 else
 {
-  Console.WriteLine("Unknown role. Exiting...");
+  Console.WriteLine("Неизвестная роль. Модуль прекращает работу в целях безопасности.");
 }

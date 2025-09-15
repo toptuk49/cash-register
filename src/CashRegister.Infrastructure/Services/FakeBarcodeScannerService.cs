@@ -1,4 +1,5 @@
 using CashRegister.Application.Services;
+using CashRegister.Infrastructure.Persistence;
 
 namespace CashRegister.Infrastructure.Services;
 

@@ -1,6 +1,7 @@
 using CashRegister.Application.Services;
 using CashRegister.Domain.Entities;
 using CashRegister.Domain.Interfaces;
+using CashRegister.Infrastructure.Persistence;
 
 namespace CashRegister.Infrastructure.Services;
 

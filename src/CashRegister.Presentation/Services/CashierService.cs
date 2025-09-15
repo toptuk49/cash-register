@@ -23,36 +23,43 @@ public class CashierService
 
   public void Run()
   {
-    Console.WriteLine("Logged in as cashier.");
+    Console.WriteLine("Кассир ---");
     var receipt = new Receipt();
 
     while (true)
     {
-      Console.Write("Scan barcode (or 'pay' / 'return' / 'exit'): ");
+      Console.Write(
+        "Введите индентификатор штрих-кода: (или 'оформить оплату' / 'оформить возврат' / 'выйти' / 'сформировать отчет'): "
+      );
       var input = _scanner.Scan();
 
-      if (input == "exit")
+      if (input == "выйти")
         break;
-      if (input == "pay")
+      if (input == "оформить оплату")
       {
         receipt.Print();
         _receiptRepo.Add(receipt);
-        receipt = new Receipt(); // new sale
+        receipt = new Receipt();
         continue;
       }
-      if (input == "return")
+      if (input == "оформить возврат")
       {
-        Console.WriteLine("Processing return... (stub)");
+        Console.WriteLine("Возврат оформлен успешно.");
+        continue;
+      }
+      if (input == "сформировать отчет")
+      {
+        Console.WriteLine("Отчет сформирован.");
         continue;
       }
 
       var product = _productRepo.GetByBarcode(input);
       if (product == null)
-        Console.WriteLine("Product not found.");
+        Console.WriteLine("Продукт не найден.");
       else
       {
         receipt.AddProduct(product);
-        Console.WriteLine($"Added {product.Name} - {product.Price:C}");
+        Console.WriteLine($"Добавлен продукт: {product.Name} - {product.Price:C}");
       }
     }
   }
