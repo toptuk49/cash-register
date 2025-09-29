@@ -224,6 +224,8 @@ Artem Mikhayelyan -  [GitHub](https://github.com/ffchgvhchh-droid)
 
 Timofey Lozhkin - [GitHub](https://github.com/TeamOfTimka)
 
+Artyom Timoshkov - [GitHub](https://github.com/paparadwa)
+
 Project Link: https://github.com/toptuk49/cash-register
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
