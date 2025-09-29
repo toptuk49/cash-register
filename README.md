@@ -219,7 +219,7 @@ Distributed under the GNU General Public License. See LICENSE for details.
 ## ✉️ Contact
 
 Anton Kuznetsov - [GitHub](https://github.com/toptuk49)
-
+Artem Mikhayelyan -  [GitHub](https://github.com/ffchgvhchh-droid)
 Project Link: https://github.com/toptuk49/cash-register
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
