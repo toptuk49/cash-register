@@ -16,4 +16,6 @@ public class InMemoryReceiptRepository : IReceiptRepository
   }
 
   public Receipt? GetById(Guid id) => _receipts.TryGetValue(id, out var receipt) ? receipt : null;
+
+  public IEnumerable<Receipt> GetAll() => _receipts.Values;
 }

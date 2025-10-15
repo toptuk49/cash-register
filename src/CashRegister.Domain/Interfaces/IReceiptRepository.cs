@@ -6,4 +6,5 @@ public interface IReceiptRepository
 {
   void Add(Receipt receipt);
   Receipt? GetById(Guid id);
+  IEnumerable<Receipt> GetAll();
 }
