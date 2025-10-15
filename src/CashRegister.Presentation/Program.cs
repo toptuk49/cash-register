@@ -1,5 +1,4 @@
-﻿using CashRegister.Application.Services;
-using CashRegister.Domain.Interfaces;
+﻿using CashRegister.Domain.Interfaces;
 using CashRegister.Infrastructure.Persistence;
 using CashRegister.Infrastructure.Services;
 using CashRegister.Presentation.Services;
@@ -9,9 +8,7 @@ var serviceProvider = new ServiceCollection()
   // Domain / Infrastructure
   .AddSingleton<IProductRepository, InMemoryProductRepository>()
   .AddSingleton<IReceiptRepository, InMemoryReceiptRepository>()
-  .AddSingleton<IUserRepository, InMemoryUserRepository>()
   .AddSingleton<IBarcodeScannerService, FakeBarcodeScannerService>()
-  .AddSingleton<IAuthenticationService, SimpleAuthenticationService>()
   // Presentation
   .AddSingleton<CashierService>()
   .AddSingleton<AdminService>()

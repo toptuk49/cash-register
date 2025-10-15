@@ -1,4 +1,3 @@
-using CashRegister.Application.Services;
 using CashRegister.Domain.Interfaces;
 
 namespace CashRegister.Presentation.Services;

@@ -1,4 +1,4 @@
-namespace CashRegister.Application.Services;
+namespace CashRegister.Domain.Interfaces;
 
 public interface IBarcodeScannerService
 {

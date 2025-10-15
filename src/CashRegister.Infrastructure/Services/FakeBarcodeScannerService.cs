@@ -1,4 +1,4 @@
-using CashRegister.Application.Services;
+using CashRegister.Domain.Interfaces;
 using CashRegister.Infrastructure.Persistence;
 
 namespace CashRegister.Infrastructure.Services;

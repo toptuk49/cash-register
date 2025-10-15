@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CashRegister.Domain\CashRegister.Domain.csproj" />
-    <ProjectReference Include="..\CashRegister.Application\CashRegister.Application.csproj" />
     <ProjectReference Include="..\CashRegister.Infrastructure\CashRegister.Infrastructure.csproj" />
   </ItemGroup>
 
