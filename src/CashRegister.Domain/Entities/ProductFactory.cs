@@ -6,7 +6,8 @@ public static class ProductFactory
 {
   public static Product Create(ProductData data)
   {
-    if (data == null) {
+    if (data == null)
+    {
       throw new ArgumentNullException(nameof(data));
     }
 

@@ -17,13 +17,21 @@ public class InMemoryProductRepository : IProductRepository
   public void AddProduct(ProductData data)
   {
     var product = ProductFactory.Create(data);
+
+    if (_products.Any(p => p.Barcode == data.Barcode))
+    {
+      throw new InvalidOperationException($"Товар со штрих-кодом '{data.Barcode}' уже существует.");
+    }
+
     _products.Add(product);
   }
 
   public void AddProducts(IEnumerable<ProductData> datas)
   {
-    var products = datas.Select(ProductFactory.Create);
-    _products.AddRange(products);
+    foreach (var data in datas)
+    {
+      AddProduct(data);
+    }
   }
 
   public Product? GetByBarcode(string barcode) =>
