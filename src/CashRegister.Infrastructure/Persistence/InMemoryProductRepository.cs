@@ -1,16 +1,30 @@
 using CashRegister.Domain.Entities;
 using CashRegister.Domain.Interfaces;
+using CashRegister.Domain.ValueObjects;
 
 namespace CashRegister.Infrastructure.Persistence;
 
 public class InMemoryProductRepository : IProductRepository
 {
-  private readonly List<Product> _products = new()
+  private readonly List<Product> _products;
+
+  public InMemoryProductRepository(ProductConfiguration? configuration = null)
   {
-    new Product("123", "Молоко", 1.50m),
-    new Product("456", "Хлеб", 1.00m),
-    new Product("789", "Яйца", 2.20m),
-  };
+    configuration ??= new ProductConfiguration();
+    _products = configuration.DefaultProducts.Select(ProductFactory.Create).ToList();
+  }
+
+  public void AddProduct(ProductData data)
+  {
+    var product = ProductFactory.Create(data);
+    _products.Add(product);
+  }
+
+  public void AddProducts(IEnumerable<ProductData> datas)
+  {
+    var products = datas.Select(ProductFactory.Create);
+    _products.AddRange(products);
+  }
 
   public Product? GetByBarcode(string barcode) =>
     _products.FirstOrDefault(p => p.Barcode == barcode);

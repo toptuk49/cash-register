@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\CashRegister.Application\CashRegister.Application.csproj" />
+    <ProjectReference Include="..\CashRegister.Domain\CashRegister.Domain.csproj" />
   </ItemGroup>
 
 </Project>
