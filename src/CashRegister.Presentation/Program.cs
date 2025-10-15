@@ -15,23 +15,45 @@ var serviceProvider = new ServiceCollection()
   // Presentation
   .AddSingleton<CashierService>()
   .AddSingleton<AdminService>()
+  .AddSingleton<ConsoleService>()
+  .AddSingleton<InputService>()
   .BuildServiceProvider();
 
-Console.WriteLine("=== Модуль кассы ===");
-Console.Write("Авторизоваться как (кассир/администратор): ");
-var role = Console.ReadLine()?.Trim().ToLower();
+var console = serviceProvider.GetRequiredService<ConsoleService>();
 
-if (role == "кассир")
+console.Clear();
+console.PrintHeader("Кассовый аппарат");
+
+while (true)
 {
-  var cashier = serviceProvider.GetRequiredService<CashierService>();
-  cashier.Run();
+  console.WriteLine("\nДоступные действия:");
+  console.WriteLine("1 - Авторизоваться, как кассир");
+  console.WriteLine("2 - Авторизоваться, как администратор");
+  console.WriteLine("0 - Выход");
+  console.PrintSeparator();
+
+  var input = serviceProvider.GetRequiredService<InputService>();
+  var choice = input.GetChoice("Введите номер действия: ", new List<string> { "0", "1", "2", "3" });
+
+  switch (choice)
+  {
+    case "1":
+      var cashier = serviceProvider.GetRequiredService<CashierService>();
+      cashier.Run();
+      break;
+    case "2":
+      var admin = serviceProvider.GetRequiredService<AdminService>();
+      admin.Run();
+      break;
+    case "0":
+      console.PrintHeader("Выход из программы");
+      return;
+  }
+
+  if (choice != "0") // Не ждем клавишу при выходе
+  {
+    console.WaitForAnyKey();
+    console.Clear();
+  }
 }
-else if (role == "администратор")
-{
-  var admin = serviceProvider.GetRequiredService<AdminService>();
-  admin.Run();
-}
-else
-{
-  Console.WriteLine("Неизвестная роль. Модуль прекращает работу в целях безопасности.");
-}
+
