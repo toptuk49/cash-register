@@ -7,9 +7,9 @@ public class FakeBarcodeScannerService : IBarcodeScannerService
 {
   private readonly List<string> _predefinedBarcodes = new()
     {
-        "4601234567890", // Valid EAN-13
-        "4609876543210",
-        "4612345678901"
+        "4006381333931", // Valid EAN-13
+        "4006381333948",
+        "4006381333955"
     };
 
   private int _currentIndex = 0;
