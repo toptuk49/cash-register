@@ -1,6 +1,9 @@
+using CashRegister.Domain.ValueObjects;
+
 namespace CashRegister.Domain.Interfaces;
 
 public interface IBarcodeScannerService
 {
-  string Scan();
+  Barcode Scan();
+  bool TryScan(out Barcode? barcode);
 }
