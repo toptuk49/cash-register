@@ -1,13 +1,31 @@
 using CashRegister.Domain.Interfaces;
-using CashRegister.Infrastructure.Persistence;
+using CashRegister.Domain.ValueObjects;
 
 namespace CashRegister.Infrastructure.Services;
 
 public class FakeBarcodeScannerService : IBarcodeScannerService
 {
-  public string Scan()
+  private readonly List<string> _predefinedBarcodes = new()
+    {
+        "4006381333931", // Valid EAN-13
+        "4006381333948",
+        "4006381333955"
+    };
+
+  private int _currentIndex = 0;
+
+  public Barcode Scan()
   {
-    Console.Write("Введите идентификатор штрих-кода: ");
-    return Console.ReadLine() ?? string.Empty;
+    var barcode = _predefinedBarcodes[_currentIndex];
+    _currentIndex = (_currentIndex + 1) % _predefinedBarcodes.Count;
+
+    Console.WriteLine($"[Имитация сканера] Отсканировал: {barcode}");
+    return new Barcode(barcode);
+  }
+
+  public bool TryScan(out Barcode? barcode)
+  {
+    barcode = Scan();
+    return true;
   }
 }
