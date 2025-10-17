@@ -8,7 +8,7 @@ var serviceProvider = new ServiceCollection()
   // Domain / Infrastructure
   .AddSingleton<IProductRepository, InMemoryProductRepository>()
   .AddSingleton<IReceiptRepository, InMemoryReceiptRepository>()
-  .AddSingleton<IBarcodeScannerService, FakeBarcodeScannerService>()
+  .AddSingleton<IBarcodeScannerService, Ean13BarcodeScannerService>()
   // Presentation
   .AddSingleton<CashierService>()
   .AddSingleton<AdminService>()
