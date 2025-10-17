@@ -106,7 +106,7 @@ public class CashierService
     _console.Write("Введите штрих-код товара: ");
     var barcode = _scanner.Scan();
 
-    var product = _productRepo.GetByBarcode(barcode);
+    var product = _productRepo.GetByBarcode(barcode.Value);
 
     if (product == null)
     {
