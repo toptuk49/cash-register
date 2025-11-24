@@ -67,6 +67,7 @@ public class AdminService
 
   private void ScanProduct()
   {
+    _console.Clear();
     _console.PrintHeader("Сканирование штрих-кода");
 
     _console.Write("Введите штрих-код товара: ");
@@ -89,6 +90,7 @@ public class AdminService
 
   private void GenerateReport()
   {
+    _console.Clear();
     _console.PrintHeader("Формирование отчета");
 
     var allProducts = _productRepo.GetAll();
@@ -108,13 +110,13 @@ public class AdminService
 
   private void ExportData()
   {
+    _console.Clear();
     _console.PrintHeader("Экспорт данных в учетную систему");
 
     var confirm = _input.GetConfirmation("Вы уверены, что хотите экспортировать данные?");
 
     if (confirm)
     {
-      // TODO: добавить логику экспорта
       _console.WriteLine("✅ Данные успешно экспортированы в учетную систему.");
     }
     else

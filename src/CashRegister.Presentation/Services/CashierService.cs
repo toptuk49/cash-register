@@ -101,6 +101,7 @@ public class CashierService
 
   private void ScanProductAndAddToReceipt(Receipt receipt)
   {
+    _console.Clear();
     _console.PrintHeader("Сканирование штрих-кода товара");
 
     _console.Write("Введите штрих-код товара: ");
@@ -135,6 +136,7 @@ public class CashierService
   }
   private void CompleteSaleAndGenerateReceipt(Receipt receipt)
   {
+    _console.Clear();
     _console.PrintHeader("Оформление продажи");
 
     if (!receipt.Items.Any())
@@ -167,6 +169,7 @@ public class CashierService
 
   private void ProcessReturn()
   {
+    _console.Clear();
     _console.PrintHeader("Оформление возврата товара");
 
     var allReceipts = _receiptRepo.GetAll().ToList();
@@ -251,6 +254,7 @@ public class CashierService
 
   private void GenerateSalesReport()
   {
+    _console.Clear();
     _console.PrintHeader("Отчет о продажах/возвратах");
 
     var allReceipts = _receiptRepo.GetAll().ToList();
